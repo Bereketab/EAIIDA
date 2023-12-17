@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Geo-AI</title>
+  <!-- Font Awesome -->
+  <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="static/mdb/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="static/mdb/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="static/mdb/css/style.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://openlayers.org/en/v3.20.1/css/ol.css" type="text/css">
+
+
+  <style type="text/css">
+    
+
+    html,
+    body,
+    header,
+    .carousel {
+      height: 12vh;
+    }
+
+    @media (max-width: 740px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+      .navbar:not(.top-nav-collapse) {
+        background: #929FBA !important;
+      }
+    }
+    .navbar-nav .nav-item {
+      margin-right: 50px; /* Adjust the value as needed */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light scrolling-navbar">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar brand -->
+          <a class="navbar-brand mt-2 mt-lg-0" href="/">
+
+            <img src="static/assets/img/AII-logo.png" alt="" height="55" alt="MDB Logo" loading="lazy">
+
+          </a>
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-2">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Products</a>
+            </li>
+          </ul>
+          <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+
+          <!-- Collapsible wrapper -->
+          <div class="collapse navbar-collapse" id="navbarRightAlignExample">
+            <!-- Left links -->
+            <ul class="navbar-nav ms-auto mb-3 mb-lg-0">
+
+              <!-- Navbar dropdown -->
+              <li class="nav-item dropdown">
+                <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                  aria-expanded="false">
+                  Tools
+                </a>
+                <!-- Dropdown menu -->
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'SPI' %}">Standrd Precipitation Index(SPI)</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Vegetation Index (VI)</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Land Surface Temperature (LST)</a>
+                  </li>
+                </ul>
+              </li>
+
+            </ul>
+            <!-- Left links -->
+          </div>
+          <!-- Collapsible wrapper -->
+        </div>
+        <!-- Right elements -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+
+
+
+  </header>
+
+  <!--Main layout-->
+  <main>
+    <div class="container-fluid bg-light">
+      <ul class="nav nav-tabs nav-fill p-2" id="myTabs">
+        <li class="nav-item me-2">
+          <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home">Data Loading and Pre-Processing</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link" id="about-tab" data-bs-toggle="tab" href="#about">Results(Chart,....)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="products-tab" data-bs-toggle="tab" href="#products">Map Visualizations</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main layout -->
+    <main>
+      <div class="container mt-5">
+        <!-- Tab content -->
+        <div class="tab-content mt-2">
+          <div class="tab-pane fade show active" id="home">
+            <form>
+              <!-- 2 column grid layout with text inputs for the first and last names -->
+              <div class="row mb-4">
+                <div class="col-3">
+                  <div data-mdb-input-init class="form-outline">
+                    <label class="form-label" for="form3Example1">Region</label>
+                    <select id="form3Example1" class="form-control" >
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="4">Four</option>
+                      <option value="5">Five</option>
+                      <option value="6">Six</option>
+                      <option value="7">Seven</option>
+                      <option value="8">Eight</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div data-mdb-input-init class="form-outline">
+                    <label class="form-label" for="form3Example1">Station</label>
+                    <select id="form3Example1" class="form-control" >
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="4">Four</option>
+                      <option value="5">Five</option>
+                      <option value="6">Six</option>
+                      <option value="7">Seven</option>
+                      <option value="8">Eight</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <label>Upload Data </label>
+                  <input type="file" class="form-control" id="spi" placeholder=".csv">
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-3">
+                  <label> </label>
+                  <button type="button" class="btn btn-default btn-block btn-load">load</button>
+                </div>
+                <div class="col-3">
+                  <ul class="list-group list-group-light">
+                    <li class="list-group-item px-3 border-0">Proper file uploaded <i class="fas fa-check"></i><i class="fas fa-times"></i></li>
+                    <li class="list-group-item px-3 border-0">Columns match <i class="fas fa-check"></i><i class="fas fa-times"></i></li>
+                    <li class="list-group-item px-3 border-0">Proper date format <i class="fas fa-check"></i><i class="fas fa-times"></i></li>
+                    <li class="list-group-item px-3 border-0">No missing values exist <i class="fas fa-check"></i><i class="fas fa-times"></i></li>
+                  </ul>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="about">
+            <div class="row"> 
+              <div class="col-6">
+                <canvas id="myChart"></canvas>
+              </div>
+              <div class="col-6">
+                <canvas id="myChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade "  id="products">
+            <div id="map" class="map" style="height: 100vh; width: 100%;" ></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </main>
+  <!--Main layout-->
+
+  <footer class="page-footer text-center font-small mdb-color darken-2 mt-4 wow fadeIn">
+
+
+    <hr class="my-4">
+
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> droughtprediction.products.eaii.gov.et
+      </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!-- Bootstrap JS (Make sure it comes before MDB JS) -->
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="static/mdb/js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="static/mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="static/mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="static/mdb/js/mdb.min.js"></script>
+  <script src="https://openlayers.org/en/v3.20.1/build/ol.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+    $('#navbarDropdown').dropdown();
+    $(document).ready(function () {
+      var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map',
+        controls: ol.control.defaults({
+          attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+            collapsible: false
+          })
+        }),
+        view: new ol.View({
+          center: [0, 0],
+          zoom: 2
+        })
+      });
+$('.btn-load').click(function () {
+    var loadButton = $(this)
+    loadButton.prop('disabled', true);
+        loadButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+
+    // Find the associated file input
+    var formData = new FormData();
+    var fileInput = $('#spi')[0];
+    console.log(fileInput)
+    if (fileInput.files.length > 0) {
+        var fileName = fileInput.files[0].name;
+        formData.append('csv', fileInput.files[0]); 
+        formData.append('fileName',fileInput.id)             
+        if (fileName.split('.').pop() === "csv") {
+            $.ajax({
+            headers: { "X-CSRFToken": '{{ csrf_token }}' },
+            url: '{% url "data_loader" %}',
+            data: formData,
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                
+                console.log(data)
+
+
+                setTimeout(() => {
+                    loadButton.prop('disabled', false);
+                    loadButton.html('Load');
+
+
+                }, 2000);
+            },
+            error: function (data) {
+
+                setTimeout(() => {
+                    loadButton.prop('disabled', false);
+                    loadButton.html('Load');
+
+                }, 2000);                    }
+        });
+
+        }
+        if (fileName.split('.').pop() !== "csv"){
+            alert("not csv")
+        }
+
+
+
+        
+
+        // You can replace the alert with your own logic to update adjacent content
+    } else {
+        alert("Please select a file before clicking Load.");
+        // You may want to provide a message if no file is selected
+    }
+});
+
+});
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+  </script>
+</body>
+
+</html>

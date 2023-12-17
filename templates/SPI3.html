@@ -1,0 +1,228 @@
+{%extends "./base.html" %}
+
+
+{%block content %}
+
+<style>
+    .btn-block {
+      width: 100%;
+      left: 50px;
+      position: relative;
+    }
+  
+    .card {
+      left: 50px;
+      position: relative;
+    }
+  </style>
+  <div class="image-container set-full-height" style="background-image: url('assets/img/wizard-city.jpg')">
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+
+            <!--      Wizard container        -->
+            <div class="wizard-container">
+                <div class="card wizard-card" data-color="green" id="wizard">
+                    <form action="" method="">
+                        <!--        You can switch ' data-color="green" '  with one of the next bright colors: "blue", "green", "orange", "red"          -->
+
+                        <div class="wizard-header">
+                            <h3>
+                                <b>Standardized Precipitation Index Analysis and Future Forcasting</b> <br>
+                            </h3>
+                        </div>
+                        <div class="wizard-navigation">
+                          <ul>
+                              <li><a href="#loading" data-toggle="tab">Data Loading</a></li>
+                              <li><a href="#pre_process" data-toggle="tab">Pre-Process</a></li>
+                              <li><a href="#facilities" data-toggle="tab">Pridictions</a></li>
+                              <li><a href="#description" data-toggle="tab">Map Visualizations</a></li>
+                          </ul>
+                      </div>
+
+                      <div class="tab-content">
+                          <div class="tab-pane" id="loading">
+                            <div class="tab-pane" >
+                                <div class="row">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <h4 class="info-text"> Let's start with uploading the data</h4>
+                                        <p>here we upload diffrent kinds of Meteorological indices including the windspeed (Maximum and minimum), wind direction, temprature (Maximum and minimum), and Corrected Precipitation  in csv
+                                            format in this section the system will load and process data for further conbination and drought
+                                            analysis </p>
+                                    </div> 
+                                 
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                          <label for="region">Region</label>
+                                          <input type="text" id="region" name="regionname" placeholder="Region name..">
+                                          <label for="sname">Station Name</label>
+                                          <input type="text" id="sname" name="Stationname" placeholder="Station name..">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                          <label>Upload Data </label>
+                                          <input type="file" class="form-control" id="spi" placeholder=".csv">
+                                          <br>
+                                          <button type="button"
+                                              class="btn btn-default btn-block btn-load">load</button>
+                                          <br>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <div class="form-group">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Validity</h5>
+                                                <p>
+                                                  <label>
+                                                      <input type="checkbox" id="moisturefileCheckbox"> Proper
+                                                      file
+                                                      uploaded
+                                                  </label>
+                                              </p>
+
+                                              <p>
+                                                  <label>
+                                                      <input type="checkbox" id="moisturecolumnsMatchCheckbox">
+                                                      Columns
+                                                      match
+                                                  </label>
+                                              </p> <br>
+                                              <!-- <p>columns match</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <div class="card-body">
+                                      <h5> </h5>
+                                      <p>
+                                        <label>
+                                            <input type="checkbox"
+                                                id="moistureproperDateFormatCheckbox"> Proper
+                                            date format
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" id="moisturenoMissingValueCheckbox">
+                                            No missing values exist
+                                        </label>
+                                    </p>
+                                    </div>
+  
+                                  </div>
+                                </div>
+                                
+                                    </div>
+
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wizard-footer">
+                            <div class="pull-right">
+                                <input type='button' class='btn btn-next btn-fill btn-success btn-wd btn-sm' name='next'
+                                    value='Load and Process' />
+                                <input type='button' class='btn btn-finish btn-fill btn-success btn-wd btn-sm'
+                                    name='finish' value='Finish' />
+
+                            </div>
+                            <div class="pull-left">
+                                <input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm'
+                                    name='previous' value='Previous' />
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div> <!-- wizard container -->
+        </div>
+    </div> <!-- row -->
+</div>
+<script src="https://openlayers.org/en/v3.20.1/build/ol.js"></script>
+
+<script>
+
+var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        target: 'map',
+        controls: ol.control.defaults({
+          attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+            collapsible: false
+          })
+        }),
+        view: new ol.View({
+          center: [0, 0],
+          zoom: 2
+        })
+      });
+    $(document).ready(function () {
+
+        $('.btn-load').click(function () {
+            var loadButton = $(this)
+            loadButton.prop('disabled', true);
+                loadButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+
+            // Find the associated file input
+            var formData = new FormData();
+            var fileInput = $(this).closest('.form-group').find('input[type="file"]');
+            if (fileInput[0].files.length > 0) {
+                var fileName = fileInput[0].files[0].name;
+                formData.append('csv', fileInput[0].files[0]); 
+                formData.append('fileName',fileInput[0].id)             
+                if (fileName.split('.').pop() === "csv") {
+                    $.ajax({
+                    headers: { "X-CSRFToken": '{{ csrf_token }}' },
+                    url: '{% url "data_loader" %}',
+                    data: formData,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        
+                        console.log(data)
+
+
+                        setTimeout(() => {
+                            loadButton.prop('disabled', false);
+                            loadButton.html('Load');
+
+
+                        }, 2000);
+                    },
+                    error: function (data) {
+
+                        setTimeout(() => {
+                            loadButton.prop('disabled', false);
+                            loadButton.html('Load');
+
+                        }, 2000);                    }
+                });
+
+                }
+                if (fileName.split('.').pop() !== "csv"){
+                    alert("not csv")
+                }
+
+
+
+                
+
+                // You can replace the alert with your own logic to update adjacent content
+            } else {
+                alert("Please select a file before clicking Load.");
+                // You may want to provide a message if no file is selected
+            }
+        });
+
+    });
+
+{% endblock %}

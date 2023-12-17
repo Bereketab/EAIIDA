@@ -1,0 +1,132 @@
+{%extends "./base.html" %}
+{%block content %}
+<!-- slider section -->
+<section class="slider_section ">
+    <div class="dot_design">
+        <img src="static/assets/images/dots.png" alt="">
+    </div>
+    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="detail-box">
+                                <div class="play_btn">
+                                    <button>
+                                        <i class="fa fa-play" aria-hidden="false">Geo-AI</i>			
+                                    </button>
+                                </div>
+                                <h1>
+                                    Drought Prediction <br>
+                                    <span>
+                                        <h2>
+                                            Indicator
+                                        </h2>
+                                    </span>
+                                </h1>
+                                <p>
+                                    <b>Standardized Precipitation Index (SPI)</b>
+                                    :The Standardized Precipitation Index (SPI) has attracted significant attention in drought 
+                                    research (Vicente et al., 2010). It is calculated by taking the logarithm of the ratio between precipitation and 
+                                    long-term average rainfall within the study region over one year. The resulting SPI values 
+                                    were then normalized to -2 to +2, where -2 indicated extreme drought and +2 indicated 
+                                    extreme wetness. 
+                                </p>
+                                <a href="">
+                                    Contact Us
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="img-box">
+                                <img src="static/assets/images/Precip.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="detail-box">
+                                <div class="play_btn">
+                                    <button>
+                                        <i class="fa fa-play" aria-hidden="true">Geo-AI</i>
+                                    </button>
+                                </div>										
+                                <p>
+                                    <b>Normalized Difference Vegitation Index(NDVI), Enhanced Vegetation Index(EVI), Normalized Difference Water Index(NDWI) </b>
+                                    <ul>
+                                        <li>NDVI is a spectrally derived index of plant biomass that is often used to measure agricultural drought conditions. 
+                                            </li>
+                                        <li>EVI is utilized in the present research to estimate the severity of drought by 
+                                            using satellite data to measure the amount of vegetation contribution for drought indices, 
+                                            the temperature of the surface, and the health of the vegetation </li>
+                                        <li>NDWI is known to be strongly related to the plant water content. 
+                                            It is therefore a very good proxy for plant water stress. </li>
+                                    </ul>
+                                    
+                                </p>
+                                <a href="">
+                                    Contact Us
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="img-box">
+                                <img src="static/assets/images/NDVI.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="detail-box">
+                                <div class="play_btn">
+                                    <button>
+                                        <i class="fa fa-play" aria-hidden="true">Geo-AI</i>
+                                    </button>
+                                </div>
+                                <p>
+                                    <b>Land surface temperature (LST)</b>
+                                    Land surface temperature is a measurement of how hot the land is to the touch. 
+                                    It differs from air temperature (the temperature given in weather reports) 
+                                    because land heats and cools more quickly than air
+                                </p>
+                                <a href="">
+                                    Contact Us
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="img-box">
+                                <img src="static/assets/images/Tmax.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel_btn-box">
+            <a class="carousel-control-prev" href="#customCarousel1" role="button" data-slide="prev">
+                <img src="static/assets/images/prev.png" alt="">
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#customCarousel1" role="button" data-slide="next">
+                <img src="static/assets/images/next.png" alt="">
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+</section>
+<!-- end slider section -->
+</div>
+
+
+{% endblock %}
